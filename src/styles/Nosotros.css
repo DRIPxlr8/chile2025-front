@@ -1,0 +1,20 @@
+.equipo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.integrante {
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-dorado);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.integrante h2 {
+    color: var(--color-dorado-claro);
+}

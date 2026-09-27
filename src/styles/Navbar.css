@@ -1,0 +1,124 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.8rem 2rem;
+
+    background-color: var(--color-fondo);
+    border-bottom: 1px solid var(--color-fondo-tarjeta);
+}
+
+/* logo */
+
+.navbar-logo {
+    color: var(--color-dorado-claro) !important;
+    text-decoration: none;
+
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    font-size: 1rem;
+
+    white-space: nowrap;
+}
+
+.navbar-logo:hover {
+    color: var(--color-dorado) !important;
+}
+
+/* Links de al medio */
+
+.navbar-links {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.navbar-links a,
+.navbar-links a:visited {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 500;
+    font-size: 0.9rem;
+
+    transition: color 0.2s;
+}
+
+.navbar-links a:hover {
+    color: var(--color-dorado);
+}
+
+/* Acciones del usuario */
+
+.navbar-acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.navbar-acciones a,
+.navbar-acciones a:visited {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.navbar-acciones a:hover {
+    color: var(--color-dorado);
+}
+
+/* Usuario conectado */
+
+.usuario-navbar {
+    color: var(--color-texto);
+    font-size: 0.9rem;
+}
+
+/* Botón de cerrar sesión */
+
+.navbar button {
+    background: none;
+    border: none;
+
+    color: var(--color-texto);
+    padding: 0;
+
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.navbar button:hover {
+    color: var(--color-dorado);
+}
+
+/* Botón Jugar */
+
+.navbar .boton-jugar {
+    background-color: var(--color-dorado);
+    color: #17130e;
+
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.navbar .boton-jugar:hover {
+    background-color: var(--color-dorado-claro);
+    color: #17130e;
+}
+
+/* Adaptación para pantallas pequeñas */
+
+@media (max-width: 800px) {
+    .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .navbar-links {
+        gap: 1rem;
+    }
+}

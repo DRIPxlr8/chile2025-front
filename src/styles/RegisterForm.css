@@ -1,0 +1,59 @@
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.register-form .form-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.register-form .form-campo label {
+    color: var(--color-dorado-claro);
+    font-weight: 500;
+}
+
+.register-form .form-campo input,
+.register-form .form-campo select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    border: 1px solid var(--color-dorado);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.register-form .form-campo input:focus,
+.register-form .form-campo select:focus {
+    outline: none;
+    border-color: var(--color-dorado-claro);
+}
+
+.register-form .campo-error {
+    border-color: #c45c5c;
+}
+
+.register-form .mensaje-error {
+    color: #e58b8b;
+    font-size: 0.85rem;
+}
+
+.register-form .cambiar-formulario {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.register-form .cambiar-formulario button {
+    background: none;
+    color: var(--color-dorado-claro);
+    padding: 0;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.register-form .cambiar-formulario button:hover {
+    color: var(--color-dorado);
+}

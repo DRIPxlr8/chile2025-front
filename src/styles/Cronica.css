@@ -1,0 +1,16 @@
+.cronica-encabezado {
+    margin-bottom: 8px;
+    border-bottom: 1px solid #2a1c12;
+    padding-bottom: 4px;
+}
+
+/* https://lenguajecss.com/css/interacciones/scrollbars/ */
+.cronica-lista {
+    max-height: 120px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    scrollbar-color: var(--color-dorado);
+
+}

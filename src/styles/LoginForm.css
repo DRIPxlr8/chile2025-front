@@ -1,0 +1,59 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-campo label {
+    color: var(--color-dorado-claro);
+    font-weight: 500;
+}
+
+.form-campo input,
+.form-campo select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    border: 1px solid var(--color-dorado);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-campo input:focus,
+.form-campo select:focus {
+    outline: none;
+    border-color: var(--color-dorado-claro);
+}
+
+.campo-error {
+    border-color: #c45c5c;
+}
+
+.mensaje-error {
+    color: #e58b8b;
+    font-size: 0.85rem;
+}
+
+.cambiar-formulario {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.cambiar-formulario button {
+    background: none;
+    color: var(--color-dorado-claro);
+    padding: 0;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+.cambiar-formulario button:hover {
+    color: var(--color-dorado);
+}

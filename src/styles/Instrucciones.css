@@ -1,0 +1,25 @@
+.instruccion-bloque {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    padding: 1.5rem;
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-dorado);
+    border-radius: 15px;
+    corner-shape: scoop
+}
+
+.instruccion-bloque h2 {
+    color: var(--color-dorado-claro);
+    margin-bottom: 0.5rem;
+}
+
+.instruccion-bloque ul {
+    margin: 0.75rem 0;
+    padding-left: 1.25rem;
+    list-style-type: upper-roman;
+}
+
+.instruccion-bloque li {
+    margin-bottom: 0.5rem;
+    margin-left: 1.25rem;
+}
