@@ -2,9 +2,8 @@ import mockPartida from "../mocks/mockPartida";
 import mockUsuarios from "../mocks/mockUsuarios";
 import "../styles/Panel.css";
 
-function Panel() {
+function Panel({ turnoActual }) {
     const mi_estado = mockPartida.mi_estado;
-    const turno_actual = mockPartida.turno_actual;
     const nombre_usuario = mockUsuarios.find((usuarios) =>
         usuarios.usuario_id === mockPartida.jugador_en_turno).nombre_usuario;
     const mejoras = mockPartida.mejoras;
@@ -47,7 +46,7 @@ function Panel() {
             <section className="cuadro">
                 <h2>Turno</h2>
                 <div className="valores-caja">
-                    <p>Turno actual: {turno_actual}</p>
+                    <p>Turno actual: {turnoActual}</p>
                     <p>Jugador en turno: {nombre_usuario}</p>
                 </div>
             </section>
