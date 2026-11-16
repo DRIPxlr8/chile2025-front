@@ -30,8 +30,11 @@ function Navbar({ usuarioActivo, cerrarSesion }) {
           <Link to="/login">Iniciar sesión</Link>
         )}
 
-        <Link to="/juego" className="boton-jugar">
-          Jugar
+        <Link
+            to={usuarioActivo ? "/partidas" : "/login"}
+            className="boton-jugar"
+        >
+            Jugar
         </Link>
       </div>
 

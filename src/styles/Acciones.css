@@ -42,3 +42,52 @@
 .boton-accion.presionado {
     box-shadow: 0 0 0 2px var(--color-dorado-claro);
 }
+
+.acciones-formulario {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #422f1c;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.acciones-formulario h3 {
+    margin: 0;
+}
+
+.acciones-formulario label {
+    font-size: 0.9rem;
+}
+
+.acciones-formulario select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem;
+    background: var(--color-fondo);
+    border: 1px solid #422f1c;
+    color: var(--color-texto);
+    font-family: inherit;
+}
+
+.acciones-formulario p {
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+}
+
+.acciones-formulario button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.acciones-estado-carga {
+    margin: 0.75rem 0;
+    color: var(--color-dorado-claro);
+    font-size: 0.9rem;
+}
+
+.acciones-estado-error {
+    margin: 0.75rem 0;
+    color: #e58b8b;
+    font-size: 0.9rem;
+}

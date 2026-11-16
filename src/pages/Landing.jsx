@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Landing.css';
 
 function Landing({ usuarioActivo }) {
-    const destino = usuarioActivo ? "/juego" : "/login";  //usuario con sesión iniciada va a la página del juego, de lo contrario va a la página de login
+    const destino = usuarioActivo ? "/partidas" : "/login";  //usuario con sesión iniciada va a la página del juego, de lo contrario va a la página de login
 
     return (
         <>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/RegisterForm.css";
 
-function RegisterForm({ onRegister, cambiarFormulario, usuarios }) {   // se guarda lo que el usuario escribió en los campos del formulario de registro y se manejan los errores de validación
+function RegisterForm({ onRegister, cambiarFormulario }) {   // se guarda lo que el usuario escribió en los campos del formulario de registro y se manejan los errores de validación
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [correo, setCorreo] = useState("");
     const [contraseña, setContraseña] = useState("");
@@ -9,35 +9,35 @@ function RegisterForm({ onRegister, cambiarFormulario, usuarios }) {   // se gua
     const [errores, setErrores] = useState({});
     const [rol, setRol] = useState("");
     const [codigoAdmin, setCodigoAdmin] = useState("");
-
+    const [cargando, setCargando] = useState(false);
+    
     function validarFormulario() {
         const nuevosErrores = {};
-
-        if (!nombreUsuario) {
-            nuevosErrores.nombreUsuario = "El nombre de usuario es obligatorio";
-        } else if (!/^[a-zA-Z0-9_]+$/.test(nombreUsuario)) {
-            nuevosErrores.nombreUsuario =
-              "El nombre de usuario solo puede contener letras, números y _";
-        } else if (usuarios.some((usuario) => usuario.nombre_usuario === nombreUsuario)) { //se verifica si el nombre de usuario ya está en uso por otro usuario
-            nuevosErrores.nombreUsuario = "El nombre de usuario ya está en uso";
-        }
-       
         const formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const nombre = nombreUsuario.trim();
 
-        if (!correo) {
+        if (!nombre) {
+            nuevosErrores.nombreUsuario = "El nombre de usuario es obligatorio";
+        } else if (nombre.length < 3 || nombre.length > 50) {
+            nuevosErrores.nombreUsuario = "El nombre de usuario debe tener entre 3 y 50 caracteres";
+        } else if (!/^[a-zA-Z0-9_]+$/.test(nombre)) {
+            nuevosErrores.nombreUsuario = "El nombre de usuario solo puede contener letras, números y _";
+        }
+
+        if (!correo.trim()) {
             nuevosErrores.correo = "El correo es obligatorio";
-        } else if (!formatoCorreo.test(correo)) {
+        } else if (!formatoCorreo.test(correo.trim())) {
             nuevosErrores.correo = "Ingresa un correo válido";
-        } else if (usuarios.some((usuario) => usuario.correo === correo)) { //se verifica si el correo ya está en uso por otro usuario
-            nuevosErrores.correo = "El correo ya está en uso";
         }
 
         if (!contraseña) {
             nuevosErrores.contraseña = "La contraseña es obligatoria";
         } else if (contraseña.length < 6) {
-            nuevosErrores.contraseña = "La contraseña debe tener al menos 6 caracteres";
-        } else if (contraseña.length > 15) {
-            nuevosErrores.contraseña = "La contraseña no debe tener más de 15 caracteres";
+            nuevosErrores.contraseña =
+                "La contraseña debe tener al menos 6 caracteres";
+        } else if (new TextEncoder().encode(contraseña).length > 72) {
+            nuevosErrores.contraseña =
+                "La contraseña no puede superar los 72 bytes";
         }
 
         if (!confirmarContraseña) {
@@ -49,33 +49,55 @@ function RegisterForm({ onRegister, cambiarFormulario, usuarios }) {   // se gua
         }
 
         if (!rol) {
-            nuevosErrores.rol = "Debes seleccionar un rol"; // se valida que el usuario haya seleccionado un rol y no quede "Selecciona un rol" como valor por defecto
-        } else if (rol === "Administrador") {
-            if (!codigoAdmin) {
-                nuevosErrores.codigoAdmin = "Debes ingresar el código de administrador";
-            } else if (codigoAdmin !== import.meta.env.VITE_CODIGO_ADMIN) { // se valida que código ingresado sea correcto según definido en el .env
-                nuevosErrores.codigoAdmin = "El código de administrador es incorrecto";
-            }
+            nuevosErrores.rol = "Debes seleccionar un rol";
+        } else if (rol === "Administrador" && !codigoAdmin.trim()) {
+            nuevosErrores.codigoAdmin =
+                "Debes ingresar el código de administrador";
         }
 
         setErrores(nuevosErrores);
-        return Object.keys(nuevosErrores).length === 0;  // deben existir 0 errores para que el formulario sea válido
+
+        return Object.keys(nuevosErrores).length === 0;
     }
 
-    function manejarSubmit(e) {
+    async function manejarSubmit(e) {
         e.preventDefault();
 
         if (!validarFormulario()) {
             return;
         }
+
         const nuevoUsuario = {
-            usuario_id: Date.now(),
-            nombre_usuario: nombreUsuario,
-            correo: correo,
-            contraseña: contraseña,
-            rol: rol
+            nombre_usuario: nombreUsuario.trim(),
+            correo: correo.trim().toLowerCase(),
+            contrasena: contraseña,
+            avatar: null,
+            rol: rol,
         };
-        onRegister(nuevoUsuario);
+
+        if (rol === "Administrador") {
+            nuevoUsuario.codigo_admin = codigoAdmin;
+        }
+
+        setErrores({});
+        setCargando(true);
+
+        try {
+            await onRegister(nuevoUsuario);
+        } catch (error) {
+            if (error.status === 403 && rol === "Administrador") {
+                setErrores({
+                    codigoAdmin: error.message,
+                });
+            } else {
+                setErrores({
+                    formulario:
+                        error.message || "No se pudo registrar la cuenta.",
+                });
+            }
+        } finally {
+            setCargando(false);
+        }
     }
 
     return (
@@ -184,7 +206,13 @@ function RegisterForm({ onRegister, cambiarFormulario, usuarios }) {   // se gua
                 </div>
             )}
 
-            <button type="submit">Crear cuenta</button>
+            {errores.formulario && (
+                <p className="mensaje-error">{errores.formulario}</p>
+            )}
+
+            <button type="submit" disabled={cargando}>
+                {cargando ? "Creando cuenta..." : "Crear cuenta"}
+            </button>
 
             <p className="cambiar-formulario">
                 ¿Ya tienes una cuenta?{" "}

@@ -1,22 +1,23 @@
+
 import { useState } from "react";
 import "../styles/LoginForm.css";
 
-function LoginForm({ usuarios, onLogin, cambiarFormulario }) {
+function LoginForm({ onLogin, cambiarFormulario }) {
     const [correo, setCorreo] = useState("");
     const [contraseña, setContraseña] = useState("");
     const [errores, setErrores] = useState({});
+    const [cargando, setCargando] = useState(false);
 
     function validarFormulario() {
         const nuevosErrores = {};
-
         const formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!correo) {
+        if (!correo.trim()) {
             nuevosErrores.correo = "El correo es obligatorio";
-        } else if (!formatoCorreo.test(correo)) {
+        } else if (!formatoCorreo.test(correo.trim())) {
             nuevosErrores.correo = "Ingresa un correo válido";
         }
-        
+
         if (!contraseña) {
             nuevosErrores.contraseña = "La contraseña es obligatoria";
         }
@@ -26,25 +27,29 @@ function LoginForm({ usuarios, onLogin, cambiarFormulario }) {
         return Object.keys(nuevosErrores).length === 0;
     }
 
-    function manejarSubmit(e) {
+    async function manejarSubmit(e) {
         e.preventDefault();
 
         if (!validarFormulario()) {
             return;
         }
-        const usuario = usuarios.find(
-            usuario =>
-                usuario.correo === correo &&
-                usuario.contraseña === contraseña
-        );
-        if (!usuario) {
-            setErrores({
-                formulario: "El correo o la contraseña son incorrectos"
-            });
-            return;
-        }
+
         setErrores({});
-        onLogin(usuario);
+        setCargando(true);
+
+        try {
+            await onLogin({
+                correo: correo.trim().toLowerCase(),
+                contrasena: contraseña,
+            });
+        } catch (error) {
+            setErrores({
+                formulario:
+                    error.message || "No se pudo iniciar sesión.",
+            });
+        } finally {
+            setCargando(false);
+        }
     }
 
     return (
@@ -75,7 +80,9 @@ function LoginForm({ usuarios, onLogin, cambiarFormulario }) {
                     placeholder="Ingresa tu contraseña"
                 />
                 {errores.contraseña && (
-                    <p className="mensaje-error">{errores.contraseña}</p>
+                    <p className="mensaje-error">
+                        {errores.contraseña}
+                    </p>
                 )}
             </div>
 
@@ -83,14 +90,13 @@ function LoginForm({ usuarios, onLogin, cambiarFormulario }) {
                 <p className="mensaje-error">{errores.formulario}</p>
             )}
 
-            <button type="submit">Iniciar sesión</button>
+            <button type="submit" disabled={cargando}>
+                {cargando ? "Ingresando..." : "Iniciar sesión"}
+            </button>
 
             <p className="cambiar-formulario">
                 ¿No tienes una cuenta?{" "}
-                <button
-                    type="button"
-                    onClick={cambiarFormulario}
-                >
+                <button type="button" onClick={cambiarFormulario}>
                     Registrarse
                 </button>
             </p>

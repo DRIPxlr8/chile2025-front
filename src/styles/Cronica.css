@@ -14,3 +14,13 @@
     scrollbar-color: var(--color-dorado);
 
 }
+
+.cronica-estado-carga {
+    color: var(--color-dorado-claro);
+    font-size: 0.9rem;
+}
+
+.cronica-estado-error {
+    color: #e58b8b;
+    font-size: 0.85rem;
+}

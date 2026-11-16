@@ -1,27 +1,45 @@
-import mockPartida from "../mocks/mockPartida";
 import Casilla from "./Casilla";
-function Casillas({ seleccion, onSeleccionar }) {
-    const casillas = mockPartida.tablero;
+
+function Casillas({
+    tablero = [],
+    unidades = [],
+    jugadorActivoId,
+    seleccion,
+    onSeleccionar,
+}) {
     return (
         <div className="grid-tablero">
-            {/* se identifica cada casilla por coordenadas y se extraen sus datos */}
-            {casillas.map((casilla) => {
+            {tablero.map((casilla) => {
                 const id = `${casilla.x}-${casilla.y}`;
+
+                const unidad = unidades.find(
+                    (u) =>
+                        String(u.unidad_id) ===
+                        String(casilla.unidad_id)
+                );
+
                 return (
                     <Casilla
                         key={id}
                         x={casilla.x}
                         y={casilla.y}
                         es_mina_oro={casilla.es_mina_oro}
-                        dueño_id={casilla.dueño_id}
+                        dueno_id={casilla.dueno_id}
                         unidad_id={casilla.unidad_id}
-                        esSeleccionada={id === seleccion}
-                        alHacerClick={() => onSeleccionar(id)}
+                        tipoUnidad={unidad?.tipo}
+                        jugadorActivoId={jugadorActivoId}
+                        esSeleccionada={
+                            seleccion != null &&
+                            Number(seleccion.x) === Number(casilla.x) &&
+                            Number(seleccion.y) === Number(casilla.y)
+                        }
+                        alHacerClick={() => onSeleccionar(casilla)}
                     />
-                )
+                );
             })}
         </div>
     );
 }
 
 export default Casillas;
+

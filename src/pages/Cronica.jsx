@@ -1,21 +1,47 @@
-import mockPartida from "../mocks/mockPartida";
 import "../styles/Panel.css";
 import "../styles/Cronica.css";
 
-function Cronica() {
-    const cronica = mockPartida.cronica;
+function Cronica({
+    eventos = [],
+    error = "",
+    cargando = false,
+}) {
     return (
-        <div className="cuadro">
+        <div className="cuadro" aria-busy={cargando}>
             <div className="cronica-encabezado">
                 <h2>Crónica</h2>
             </div>
+
+            {cargando && (
+                <p
+                    className="cronica-estado-carga"
+                    role="status"
+                    aria-live="polite"
+                >
+                    Cargando crónica...
+                </p>
+            )}
+
+            {error && (
+                <p className="cronica-estado-error" role="alert">
+                    {error}
+                </p>
+            )}
+
             <section className="valores-caja cronica-lista">
-                {cronica.map((evento, index) => (
-                    <p key={index}>Turno {evento.turno}: {evento.descripcion}</p>
-                ))}
+                {!cargando && eventos.length === 0 ? (
+                    <p>No hay eventos registrados.</p>
+                ) : (
+                    eventos.map((evento, index) => (
+                        <p key={`${evento.turno}-${index}`}>
+                            Turno {evento.turno}: {evento.descripcion}
+                        </p>
+                    ))
+                )}
             </section>
         </div>
     );
 }
 
 export default Cronica;
+

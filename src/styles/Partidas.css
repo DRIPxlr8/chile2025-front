@@ -1,0 +1,135 @@
+.partidas-page {
+    max-width: 1000px;
+    min-height: 65vh;
+    margin: 2rem auto;
+    padding: 1.5rem;
+}
+
+.partidas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.partidas-header h1 {
+    margin-bottom: 0.75rem;
+}
+
+.partidas-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+}
+
+.partida-card {
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-dorado);
+    padding: 1.5rem;
+    border-radius: 4px;
+}
+
+.partida-card h2 {
+    color: var(--color-dorado-claro);
+    margin-bottom: 1rem;
+}
+
+.partida-card p {
+    margin-bottom: 0.75rem;
+}
+
+.partidas-error {
+    color: #e58b8b;
+}
+
+.partidas-vacias {
+    padding: 1.5rem;
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-dorado);
+}
+
+@media (max-width: 600px) {
+    .partidas-page {
+        padding: 1rem;
+    }
+
+    .partidas-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+.partidas-crear {
+    margin: 1.5rem 0 2rem;
+    padding: 1.5rem;
+    background-color: var(--color-fondo-tarjeta);
+    border: 1px solid var(--color-dorado);
+    border-radius: 4px;
+}
+
+.partidas-crear h2 {
+    margin-bottom: 1rem;
+}
+
+.partidas-crear-form {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.partidas-crear-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 220px;
+}
+
+.partidas-crear-campo input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem;
+}
+
+.partida-card button {
+    margin-top: 0.5rem;
+}
+
+.partidas-mensaje-exito {
+    margin: 1rem 0;
+    color: #87c995;
+}
+
+.partidas-mensaje-error {
+    margin: 1rem 0;
+    color: #e58b8b;
+}
+
+@media (max-width: 600px) {
+    .partidas-crear-form {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .partidas-crear-campo {
+        min-width: 0;
+    }
+}
+
+.partidas-acciones {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+/* B3: historial de partidas terminadas */
+.partidas-finalizadas {
+    margin-top: 2rem;
+}
+
+.partidas-finalizadas > p {
+    margin-bottom: 1rem;
+}

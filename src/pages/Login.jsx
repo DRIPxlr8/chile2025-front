@@ -1,19 +1,27 @@
 import { useState } from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
-import mockUsuarios from "../mocks/mockUsuarios";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
+import {
+    registrarUsuario as registrarUsuarioAPI,
+    iniciarSesion as iniciarSesionAPI,
+} from "../services/api";
 
 function Login({ onLogin }) {
     const navigate = useNavigate();
-    
     const [mostrarRegistro, setMostrarRegistro] = useState(false);
-    const [usuarios, setUsuarios] = useState(mockUsuarios);
 
-    function registrarUsuario(nuevoUsuario) {
-        setUsuarios([...usuarios, nuevoUsuario]);
+    async function manejarRegistro(nuevoUsuario) {
+        await registrarUsuarioAPI(nuevoUsuario);
         setMostrarRegistro(false);
+    }
+
+    async function manejarLogin(credenciales) {
+        const usuario = await iniciarSesionAPI(credenciales);
+
+        onLogin(usuario);
+        navigate("/partidas");
     }
 
     return (
@@ -35,18 +43,12 @@ function Login({ onLogin }) {
 
                 {mostrarRegistro ? (
                     <RegisterForm
-                        usuarios={usuarios} // lista de usuarios para validar si el nombre de usuario o correo ya están en uso
-                        onRegister={registrarUsuario}
+                        onRegister={manejarRegistro}
                         cambiarFormulario={() => setMostrarRegistro(false)}
                     />
                 ) : (
-                    
                     <LoginForm
-                        usuarios={usuarios}
-                        onLogin={(usuario) => {
-                        onLogin(usuario);
-                        navigate("/juego");
-                        }}
+                        onLogin={manejarLogin}
                         cambiarFormulario={() => setMostrarRegistro(true)}
                     />
                 )}
